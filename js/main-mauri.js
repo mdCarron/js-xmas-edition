@@ -11,9 +11,9 @@ console.log(comportamiento);
 console.log(regalo);
 
 validarNombre(nombreUsuario);
-//validarCiudad(ciudad);
-//validarComportamiento(comportamiento);
-//validarRegalo(regalo);
+validarCiudad(ciudad);
+validarComportamiento(comportamiento);
+validarRegalo(regalo);
 
 function validarNombre(nombreUsuario){
     if(nombreUsuario.length === 0){
@@ -22,28 +22,31 @@ function validarNombre(nombreUsuario){
     if(nombreUsuario.length >= 50){
         return 'Este campo debe tener menos de 50 caracteres.'
     }
+    
     return ''
 }
 
-/* 
 function validarCiudad(ciudad){
-    if (ciudad.value === ''){
+    if (ciudad === ''){
         return 'Por favor seleccionar una ciudad.'
     }
     return ''
 }
 
 function validarComportamiento(comportamiento){
-    if(comportamiento.value === ''){
+    if(comportamiento === ''){
         return 'Por favor seleccionar una opcion.'
     }
     return ''
 }
 
 function validarRegalo(regalo){
-    if (regalo.value === ''){
-        return 'Por favor dejar un mensaje para santa.'
+    if (regalo.length === 0){
+        return 'Por favor dejar un mensaje para papa noel.'
     }
+    if (regalo.length >= 100){
+        return 'Estas pidiendo mucho a papa noel'
+    }
+
     return ''
 }
- */
