@@ -5,9 +5,14 @@ pruebaValidarRegalo();
 
 function pruebaValidarNombre(){
     console.assert(
+        validarNombre('Mauricio') === '',
+        'validarNombre no vaida que el usuario ingreso un nombre valido.'
+    );
+
+    console.assert(
         validarNombre('') === 'Este campo debe tener al menos 1 caracter.', 
         'validarNombre no valida con un string vacio.'
-        );
+    );
 
     console.assert(
         validarNombre('111111111111111111111111111111111111111111111111111') === 'Este campo debe tener menos de 50 caracteres.',
@@ -19,7 +24,7 @@ function pruebaValidarCiudad(){
     console.assert(
         validarCiudad('') === 'Por favor seleccionar una ciudad.', 
         'validarCiudad no valida que hay una ciudad seleccionada..'
-    )
+    );
 }
 
 function pruebaValidarComportamiento(){
