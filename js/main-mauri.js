@@ -22,7 +22,9 @@ function validarNombre(nombreUsuario){
     if(nombreUsuario.length >= 50){
         return 'Este campo debe tener menos de 50 caracteres.'
     }
-    
+    if(!/^[A-z]+$/.test(nombre)){
+        return 'El campo nombre solo acepta letras.'
+    }
     return ''
 }
 
@@ -47,6 +49,49 @@ function validarRegalo(regalo){
     if (regalo.length >= 100){
         return 'Estas pidiendo mucho a papa noel'
     }
-
+    if (!/[A-z0-9]+$/.test(regalo)){
+        return 'El campo de la descripcion solo acepta letras y numeros.'
+    }
     return ''
+}
+
+$form.onsubmit = validarFormulario;
+function validarFormulario(event){
+    const errorNombre = validarNombre(nombreUsuario);
+    const errorCiudad = validarCiudad(ciudad);
+    const errorRegalo = validarRegalo(regalo);
+
+    const errores = {
+        nombre: errorNombre,
+        ciudad: errorCiudad,
+        regalo: errorRegalo
+    }
+
+    manejarErrores(errores);
+
+    event.preventDefault();
+}
+
+function manejarErrores(){
+    errorNombre = errores.nombre;
+    errorCiudad = errores.ciudad;
+    errorRegalo = errores.regalo;
+
+    if(errorNombre){
+        $form.nombre.className = 'error'
+    }else{
+        $form.nombre.className = ''
+    }
+
+    if(errorCiudad){
+        $form.ciudad.className = 'error'
+    }else{
+        $form.ciudad.className = ''
+    }
+
+    if(errorRegalo){
+        $form['descripcion-regalo'].className = 'error'
+    }else{
+        $form['descripcion-regalo'].className = ''
+    }
 }
