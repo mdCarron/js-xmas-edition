@@ -1,31 +1,72 @@
 const $form = document.querySelector('#carta-a-santa');
+$form.onsubmit = validarFormulario;
 
-const nombreUsuario = $form.nombre.value;
-const ciudad = $form.ciudad.value;
-const comportamiento = $form.comportamiento.value;
-const regalo = $form['descripcion-regalo'].value;
+function validarFormulario(event){
+    event.preventDefault();
 
-console.log(nombreUsuario);
-console.log(ciudad);
-console.log(comportamiento);
-console.log(regalo);
+    const nombreUsuario = $form.nombre.value;
+    const ciudad = $form.ciudad.value;
+    const comportamiento = $form.comportamiento.value;
+    const regalo = $form['descripcion-regalo'].value;
 
-validarNombre(nombreUsuario);
-validarCiudad(ciudad);
-validarComportamiento(comportamiento);
-validarRegalo(regalo);
+    const errorNombreUsuario = validarNombre(nombreUsuario);
+    const errorCiudad = validarCiudad(ciudad);
+    const errorComportamiento = validarComportamiento(comportamiento);
+    const errorRegalo = validarRegalo(regalo);
+
+    const errores = {
+        nombre: errorNombreUsuario,
+        comportamiento: errorComportamiento,
+        ciudad: errorCiudad,
+        'descripcion-regalo': errorRegalo
+    }
+
+    manejarErrores(errores);
+
+    const esExito = manejarErrores(errores) === 0;
+    if(esExito){
+        document.querySelector('#exito').className = '';
+        $form.className = 'oculto';
+    }
+}
+
+function manejarErrores(errores){
+    const keys = Object.keys(errores);
+    const $errores = document.querySelector('#errores');
+    let cantidadErrores = 0;
+
+    keys.forEach(function(key){
+        const error = errores[key];
+        
+        if(error){
+            cantidadErrores++;
+            $form[key].className = 'error'
+            
+            const $error = document.createElement('li');
+            $error.textContent = error;
+            $errores.appendChild($error);
+            
+        }else{
+            $form[key].className = ''
+        }
+    })
+    console.log(cantidadErrores)
+    return cantidadErrores
+}
 
 function validarNombre(nombreUsuario){
-    if(nombreUsuario.length === 0){
+    if(nombreUsuario === ''){
         return 'Este campo debe tener al menos 1 caracter.'
-    }
-    if(nombreUsuario.length >= 50){
+    
+    }else if(nombreUsuario.length >= 50){
         return 'Este campo debe tener menos de 50 caracteres.'
-    }
-    if(!/^[A-z]+$/.test(nombre)){
+    
+    }else if(!/^[A-z]+$/.test(nombreUsuario)){
         return 'El campo nombre solo acepta letras.'
+    
+    }else{
+        return ''
     }
-    return ''
 }
 
 function validarCiudad(ciudad){
@@ -43,55 +84,16 @@ function validarComportamiento(comportamiento){
 }
 
 function validarRegalo(regalo){
-    if (regalo.length === 0){
+    if (regalo === ''){
         return 'Por favor dejar un mensaje para papa noel.'
-    }
-    if (regalo.length >= 100){
+    
+    }else if (regalo.length >= 100){
         return 'Estas pidiendo mucho a papa noel'
-    }
-    if (!/[A-z0-9]+$/.test(regalo)){
+    
+    }else if (!/[A-z0-9]+$/i.test(regalo)){
         return 'El campo de la descripcion solo acepta letras y numeros.'
-    }
-    return ''
-}
-
-$form.onsubmit = validarFormulario;
-function validarFormulario(event){
-    const errorNombre = validarNombre(nombreUsuario);
-    const errorCiudad = validarCiudad(ciudad);
-    const errorRegalo = validarRegalo(regalo);
-
-    const errores = {
-        nombre: errorNombre,
-        ciudad: errorCiudad,
-        regalo: errorRegalo
-    }
-
-    manejarErrores(errores);
-
-    event.preventDefault();
-}
-
-function manejarErrores(){
-    errorNombre = errores.nombre;
-    errorCiudad = errores.ciudad;
-    errorRegalo = errores.regalo;
-
-    if(errorNombre){
-        $form.nombre.className = 'error'
+    
     }else{
-        $form.nombre.className = ''
-    }
-
-    if(errorCiudad){
-        $form.ciudad.className = 'error'
-    }else{
-        $form.ciudad.className = ''
-    }
-
-    if(errorRegalo){
-        $form['descripcion-regalo'].className = 'error'
-    }else{
-        $form['descripcion-regalo'].className = ''
+        return ''
     }
 }
