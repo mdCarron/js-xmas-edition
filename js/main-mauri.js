@@ -21,8 +21,7 @@ function validarFormulario(event){
         'descripcion-regalo': errorRegalo
     }
 
-    manejarErrores(errores);
-
+    borrarMensajesError();
     const esExito = manejarErrores(errores) === 0;
     if(esExito){
         document.querySelector('#exito').className = '';
@@ -95,5 +94,12 @@ function validarRegalo(regalo){
     
     }else{
         return ''
+    }
+}
+
+function borrarMensajesError(){
+    const mensajesError = document.querySelectorAll('li');
+    for(let i=0; i<mensajesError.length; i++){
+        mensajesError[i].remove();
     }
 }
